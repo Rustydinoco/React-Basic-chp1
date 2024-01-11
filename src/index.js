@@ -22,14 +22,21 @@ function Header() {
 }
 
 function Menu() {
+  const foods = data;
+  const numFoods = foods.length;
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <ul className="foods">
-        {data.map((coffee) => (
-          <Coffee coffeeObj={coffee} key={coffee.nama} />
-        ))}
-      </ul>
+      {numFoods > 0 ? (
+        <ul className="foods">
+          {data.map((coffee) => (
+            <Coffee coffeeObj={coffee} key={coffee.nama} />
+          ))}
+        </ul>
+      ) : (
+        <p>Warung sedang tutup</p>
+      )}
+
       {/* <Coffee nama="Americano" harga="IDR 15k" foto="coffee/americano.jpg" />
 
       <Coffee nama="Capuchino" harga="IDR 15k" foto="coffee/capuchino.jpg" />
@@ -61,13 +68,24 @@ function Coffee(props) {
 }
 
 function Footer() {
-  const date = new Date().getFullYear();
-  const day = new Date().getDay();
+  const year = new Date().getFullYear();
+  const hour = new Date().getHours();
+  const jamBuka = 0;
+  const jamTutup = 22;
+  const isOpen = hour >= jamBuka && hour <= jamTutup;
 
   return (
-    <footer>
-      {" "}
-      Copyright {date} {day} Adamar Coffee
+    <footer className="footer">
+      {isOpen ? (
+        <div className="order">
+          <p>
+            Copyright {new Date().getFullYear()} Adamar Coffee | Buka {jamBuka}{" "}
+            - Tutup {jamTutup}
+          </p>
+        </div>
+      ) : (
+        <p>Warung sedang tutup</p>
+      )}
     </footer>
   );
 }
