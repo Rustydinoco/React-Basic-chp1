@@ -20,7 +20,7 @@ function Header() {
     </div>
   );
 }
-
+// ----------Menampilkan props secara dinamis menggunakan map()---------------
 function Menu() {
   const foods = data;
   const numFoods = foods.length;
@@ -36,6 +36,8 @@ function Menu() {
       ) : (
         <p>Warung sedang tutup</p>
       )}
+
+      {/* --------Cara Menggunakan Props */}
 
       {/* <Coffee nama="Americano" harga="IDR 15k" foto="coffee/americano.jpg" />
 
@@ -57,7 +59,6 @@ function Menu() {
 }
 
 function Coffee(props) {
-  console.log(props);
   return (
     <li className="food">
       <h3>{props.coffeeObj.nama}</h3>
@@ -67,28 +68,80 @@ function Coffee(props) {
   );
 }
 
+// ----------------------------------------------------------------------------
+
 function Footer() {
   const year = new Date().getFullYear();
   const hour = new Date().getHours();
-  const jamBuka = 0;
+  const jamBuka = 12;
   const jamTutup = 22;
   const isOpen = hour >= jamBuka && hour <= jamTutup;
 
+  // CARA PENGKONDISIAN ADA 3 CARA
+
+  //---------------- CARA 1 (TERNARY IF)---------------------
+  // return (
+  //   <footer className="footer">
+  //     {isOpen ? (
+  //       <div className="order">
+  //         <p>
+  //           Copyright {new Date().getFullYear()} Adamar Coffee | Buka {jamBuka}{" "}
+  //           - Tutup {jamTutup}
+  //         </p>
+  //       </div>
+  //     ) : (
+  //       <p>Warung sedang tutup</p>
+  //     )}
+  //   </footer>
+  // );
+
+  //--------------CARA 2 (IF BIASA)-------------------
+  // if (isOpen) {
+  //   return (
+  //     <footer className="footer">
+  //       <div className="order">
+  //         <p>
+  //           Copyright {new Date().getFullYear()} Adamar Coffee | Buka {jamBuka}-
+  //           Tutup {jamTutup}
+  //         </p>
+  //       </div>
+  //     </footer>
+  //   );
+  // } else {
+  //   return <p>Toko sedang tutup</p>;
+  // }
+
+  // --------CARA 3 (REFACTOR COMPONENT)--------------------
+
+  if (isOpen) {
+    return <OpenHour jamBuka={jamBuka} jamTutup={jamTutup} />;
+  } else {
+    return <CloseHour jamBuka={jamBuka} jamTutup={jamTutup} />;
+  }
+}
+
+function OpenHour(props) {
   return (
     <footer className="footer">
-      {isOpen ? (
-        <div className="order">
-          <p>
-            Copyright {new Date().getFullYear()} Adamar Coffee | Buka {jamBuka}{" "}
-            - Tutup {jamTutup}
-          </p>
-        </div>
-      ) : (
-        <p>Warung sedang tutup</p>
-      )}
+      <div className="order">
+        <p>
+          Copyright {new Date().getFullYear()} Adamar Coffee | Buka
+          {props.jamBuka}- Tutup {props.jamTutup}
+        </p>
+      </div>
     </footer>
   );
 }
+
+function CloseHour(props) {
+  return (
+    <footer className="footer">
+      <p>Toko Sedang Tutup</p>
+    </footer>
+  );
+}
+
+// ------------------------------------------------------
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
