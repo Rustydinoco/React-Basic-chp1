@@ -1,27 +1,31 @@
 const coffeeMenu = [
   {
     nama: "Americano",
-    harga: "IDR 15k",
+    harga: 15000,
     foto: "coffee/americano.jpg",
+    stok: Math.random() >= 0.5 ? true : false,
   },
 
   {
     nama: "Capuchino",
-    harga: "IDR 15k",
+    harga: 15000,
     foto: "coffee/capuchino.jpg",
+    stok: Math.random() >= 0.5 ? true : false,
   },
 
   {
     nama: "Coffee latte",
-    harga: "IDR 15k",
+    harga: 15000,
     foto: "coffee/coffee latte.jpg",
+    stok: Math.random() >= 0.5 ? true : false,
   },
 
   {
     nama: "Matcha latte",
-    harga: "IDR 15k",
+    harga: 15000,
     foto: "coffee/matcha latte.jpg",
+    stok: Math.random() >= 0.5 ? true : false,
   },
 ];
 
-export default coffeeMenu
+export default coffeeMenu;

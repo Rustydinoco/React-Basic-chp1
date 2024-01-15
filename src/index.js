@@ -21,21 +21,41 @@ function Header() {
   );
 }
 // ----------Menampilkan props secara dinamis menggunakan map()---------------
+// function Menu() {
+//   const foods = data;
+//   const numFoods = foods.length;
+//   return (
+//     <main className="menu">
+//       <h2>Our Menu</h2>
+//       {numFoods > 0 ? (
+//         <ul className="foods">
+//           {data.map((coffee) => (
+//             <Coffee coffeeObj={coffee} key={coffee.nama} />
+//           ))}
+//         </ul>
+//       ) : (
+//         <p>Warung sedang tutup</p>
+//       )}
+
+/* Membungkus root elemen lebih dari satu dengan menggunakan React.fragment atau <> */
+
 function Menu() {
   const foods = data;
   const numFoods = foods.length;
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      {numFoods > 0 ? (
-        <ul className="foods">
-          {data.map((coffee) => (
-            <Coffee coffeeObj={coffee} key={coffee.nama} />
-          ))}
-        </ul>
-      ) : (
-        <p>Warung sedang tutup</p>
-      )}
+      <React.Fragment>
+        {numFoods > 0 ? (
+          <ul className="foods">
+            {data.map((coffee) => (
+              <Coffee coffeeObj={coffee} key={coffee.nama} />
+            ))}
+          </ul>
+        ) : (
+          <p>Warung sedang tutup</p>
+        )}
+      </React.Fragment>
 
       {/* --------Cara Menggunakan Props */}
 
@@ -58,20 +78,46 @@ function Menu() {
   );
 }
 
+// --------------------DESTRUCTING PROPS-------------------
+// function Coffee(props) {
+//   return (
+//     <li className="food">
+//       <h3>{props.coffeeObj.nama}</h3>
+//       <p>{props.coffeeObj.harga}</p>
+//       <img src={props.coffeeObj.foto} alt="" width={500} height={500} />
+//     </li>
+//   );
+// }
+
+// CARA 1
 function Coffee(props) {
+  const { nama, harga, foto, stok } = props.coffeeObj;
   return (
-    <li className="food">
-      <h3>{props.coffeeObj.nama}</h3>
-      <p>{props.coffeeObj.harga}</p>
-      <img src={props.coffeeObj.foto} alt="" width={500} height={500} />
+    <li className={`food ${!stok ? "sold-out" : ""}`}>
+      <h3>{nama}</h3>
+      <span>{stok ? harga : "Habis"}</span>
+      <img src={foto} alt="" width={500} height={500} />
     </li>
   );
 }
 
+// CARA 2
+// function OpenHour(jamTutup,jamBuka) {
+//   return (
+//     <footer className="footer">
+//       <div className="order">
+//         <p>
+//           Copyright {new Date().getFullYear()} Adamar Coffee | Buka
+//           {jamBuka}- Tutup {jamTutup}
+//         </p>
+//       </div>
+//     </footer>
+//   );
+// }
+
 // ----------------------------------------------------------------------------
 
 function Footer() {
-  const year = new Date().getFullYear();
   const hour = new Date().getHours();
   const jamBuka = 12;
   const jamTutup = 22;
